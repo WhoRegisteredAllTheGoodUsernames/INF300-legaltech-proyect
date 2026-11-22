@@ -16,6 +16,7 @@ import TemplateView from '@/views/TemplateView'
 function App() {
 	const [view, setView] = useState('index')
 	const [action, setAction] = useState('default')
+	const [actionParam, setActionParam] = useState(-1)
 	const [confirmation, setConfirmation] = useState(false)
 
 	const handleUIChange = (actualValue: string, nextValue: string, handler: (value: string) => void) => {
@@ -41,8 +42,9 @@ function App() {
 		handleUIChange(view, nextView, setView)
 	}
 
-	const handleActionChange = (view: string, nextAction: string) => {
-		if (action != nextAction && DefaultViews[view].actions.find((action) => action == nextAction)){
+	const handleActionChange = (nextActionView: string, nextAction: string, actionParam: number) => {
+		if (action != nextAction && DefaultViews[nextActionView].actions.find((action) => action == nextAction)){
+			setActionParam(actionParam)
 			handleUIChange(action, nextAction, setAction)
 		}
 	}
@@ -51,15 +53,20 @@ function App() {
 		<>
 		<header>
 		<Navbar
-			actualView={view}
-			views={DefaultViews}
-			handleViewChange={handleViewChange}
+		actualView={view}
+		views={DefaultViews}
+		handleViewChange={handleViewChange}
 		/>
 		</header>
 		{ view == 'template' ? (
 			<TemplateView />
 		) : view == 'document' ? (
-		<DocumentView />
+		<DocumentView
+			action={action}
+			actionParam={actionParam}
+			handleActionChange={handleActionChange}
+			handleViewChange={handleViewChange}
+		/>
 		) : view == 'directory' ? (
 		<DirectoryView />
 		) : (

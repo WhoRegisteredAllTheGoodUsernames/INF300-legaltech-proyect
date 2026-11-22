@@ -1,5 +1,14 @@
 export type Action = 'View' | 'Create' | 'Edit' | 'Delete' | 'Default'
 
+export type ListAction = {
+	view: string,
+	action: string
+}
+
+export type ListActions = {
+	[action: string]: ListAction
+}
+
 export type Views = Record<string, View>
 
 export type View = {
@@ -14,7 +23,7 @@ export const DefaultViews: Views = {
 	},
 	'document': {
 		'title': 'Documentos',
-		'actions': ['Create', 'Default']
+		'actions': ['View', 'Create', 'Default']
 	},
 	'directory': {
 		'title': 'Directorio',
