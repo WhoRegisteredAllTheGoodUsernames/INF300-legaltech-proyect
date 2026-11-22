@@ -18,8 +18,6 @@ function IndexView({
 		<button onClick={() => {handleViewChange('template'); handleActionChange('template', 'View')}}>&rarr;</button></li>
 		<li>Crear plantilla
 		<button onClick={() => {handleViewChange('template'); handleActionChange('template', 'Create')}}>&rarr;</button></li>
-		<li>Editar plantilla
-		<button onClick={() => {handleViewChange('template'); handleActionChange('template', 'Edit')}}>&rarr;</button></li>
 	</ul>
 	
 	<h2>Directorio</h2>
@@ -28,8 +26,6 @@ function IndexView({
 		<button onClick={() => {handleViewChange('directory'); handleActionChange('directory', 'View')}}>&rarr;</button></li>
 		<li>Añadir persona al directorio
 		<button onClick={() => {handleViewChange('directory'); handleActionChange('directory', 'Create')}}>&rarr;</button></li>
-		<li>Editar persona
-		<button onClick={() => {handleViewChange('directory'); handleActionChange('directory', 'Edit')}}>&rarr;</button></li>
 	</ul>
 	</>
 	)
