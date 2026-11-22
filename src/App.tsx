@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { DefaultViews } from '@/types/view'
 import Navbar from "@/components/Navbar"
 import IndexView from '@/views/IndexView'
 import DocumentView from '@/views/DocumentView'
@@ -11,36 +12,64 @@ import TemplateView from '@/views/TemplateView'
 //   2) La vista de creación de plantillas
 //   3) La vista de creación de documentos
 //   3) El directorio
+
 function App() {
-  const [view, setView] = useState('index')
-  const [confirmation, setConfirmation] = useState(false)
-  return (
-	<>
-	<header>
+	const [view, setView] = useState('index')
+	const [action, setAction] = useState('default')
+	const [confirmation, setConfirmation] = useState(false)
+
+	const handleUIChange = (actualValue: string, nextValue: string, handler: (value: string) => void) => {
+		if (actualValue == nextValue){
+			return
+		}
+
+		if (confirmation){
+			const userConfirms = confirm("Hay cambios no guardados. ¿Desea salir igualmente?")
+
+			if (userConfirms){
+				setConfirmation(false)
+				handler(nextValue)
+			} else {
+				return
+			}
+		}
+
+		handler(nextValue)
+	}
+
+	const handleViewChange = (nextView: string) => {
+		handleUIChange(view, nextView, setView)
+	}
+
+	const handleActionChange = (view: string, nextAction: string) => {
+		if (action != nextAction && DefaultViews[view].actions.find((action) => action == nextAction)){
+			handleUIChange(action, nextAction, setAction)
+		}
+	}
+
+	return (
+		<>
+		<header>
 		<Navbar
-			view={view}
-			setView={setView}
-			views={{
-				'template': 'Plantilas',
-				'document': 'Documentos',
-				'directory': 'Directorio',
-				'index': 'Índice'
-			}}
-			confirmation={confirmation}
-			setConfirmation={setConfirmation}
+			actualView={view}
+			views={DefaultViews}
+			handleViewChange={handleViewChange}
 		/>
-	</header>
-	{ view == 'template' ? (
-		<TemplateView />
-	) : view == 'document' ? (
+		</header>
+		{ view == 'template' ? (
+			<TemplateView />
+		) : view == 'document' ? (
 		<DocumentView />
-	) : view == 'directory' ? (
+		) : view == 'directory' ? (
 		<DirectoryView />
-	) : (
-		<IndexView />
-	)}
-    </>
-  )
+		) : (
+		<IndexView
+			handleViewChange={handleViewChange}
+			handleActionChange={handleActionChange}
+		/>
+		)}
+		</>
+	)
 }
 
 export default App

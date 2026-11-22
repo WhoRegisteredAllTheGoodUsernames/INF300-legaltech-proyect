@@ -1,35 +1,16 @@
+import type { Views } from '@/types/view'
+
 function Navbar({
-	view, setView, views, confirmation, setConfirmation
+	actualView, views, handleViewChange
 }: {
-	view: string
-	setView: (view: string) => void
-	views: Record<string, string>
-	confirmation: boolean
-	setConfirmation: (confirmation: boolean) => void
+	actualView: string
+	views: Views
+	handleViewChange: (nextView: string) => void
 }) {
-	const handleViewChange = (nextView: string) => {
-		if (view == nextView){
-			return
-		}
-
-		if (confirmation){
-			const userConfirms = confirm("Hay cambios no guardados. ¿Desea salir igualmente?")
-
-			if (userConfirms){
-				setConfirmation(false)
-				setView(nextView)
-			} else {
-				return
-			}
-		}
-
-		setView(nextView)
-	}
-
 	return (
 		<ul>
-		{Object.entries(views).map(([view, titulo]) => (
-			<button onClick={() => handleViewChange(view)}>{titulo}</button>
+		{Object.entries(views).map(([listView, view]) => (
+			<button onClick={() => handleViewChange(listView)}>{actualView == listView ? '*' : ''}{view.title}</button>
 		))}
 		</ul>
 	)
