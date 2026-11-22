@@ -13,10 +13,12 @@ import TemplateView from '@/views/TemplateView'
 //   3) El directorio
 function App() {
   const [view, setView] = useState('index')
+  const [confirmation, setConfirmation] = useState(false)
   return (
 	<>
 	<header>
 		<Navbar
+			view={view}
 			setView={setView}
 			views={{
 				'template': 'Plantilas',
@@ -24,6 +26,8 @@ function App() {
 				'directory': 'Directorio',
 				'index': 'Índice'
 			}}
+			confirmation={confirmation}
+			setConfirmation={setConfirmation}
 		/>
 	</header>
 	{ view == 'template' ? (
