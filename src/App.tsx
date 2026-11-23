@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { DefaultViews } from '@/types/view'
+import { DefaultViews, type UIController } from '@/types/view'
 import Navbar from "@/components/Navbar"
 import IndexView from '@/views/IndexView'
 import DocumentView from '@/views/DocumentView'
 import DirectoryView from '@/views/DirectoryView'
 import TemplateView from '@/views/TemplateView'
-
+import RouterContext from '@/RouterContext'
 
 // Acá definimos las vistas principales
 //   1) El inicio, donde podemos acceder a las otras vistas :v
@@ -49,33 +49,38 @@ function App() {
 		}
 	}
 
+	const UIController = {
+		view: view,
+		action: action,
+		actionParam: actionParam,
+		confirmation: confirmation,
+
+		setView: setView,
+		setAction: setAction,
+		setActionParam: setActionParam,
+		setConfirmation: setConfirmation,
+		
+		handleActionChange: handleActionChange,
+		handleViewChange: handleViewChange
+	} as UIController
+
 	return (
-		<>
-		<header>
-		<Navbar
-		actualView={view}
-		views={DefaultViews}
-		handleViewChange={handleViewChange}
-		/>
-		</header>
-		{ view == 'template' ? (
-			<TemplateView />
-		) : view == 'document' ? (
-		<DocumentView
-			action={action}
-			actionParam={actionParam}
-			handleActionChange={handleActionChange}
-			handleViewChange={handleViewChange}
-		/>
-		) : view == 'directory' ? (
-		<DirectoryView />
-		) : (
-		<IndexView
-			handleViewChange={handleViewChange}
-			handleActionChange={handleActionChange}
-		/>
-		)}
-		</>
+		<RouterContext.Provider value={UIController}>
+			<header>
+			<Navbar
+				views={DefaultViews}
+			/>
+			</header>
+			{ view == 'template' ? (
+			<TemplateView/>
+			) : view == 'document' ? (
+			<DocumentView/>
+			) : view == 'directory' ? (
+			<DirectoryView />
+			) : (
+			<IndexView/>
+			)}
+		</RouterContext.Provider>
 	)
 }
 

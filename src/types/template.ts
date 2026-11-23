@@ -4,5 +4,5 @@ export type Template = {
 	description: string,
 	created: Date,
 	last_edited: Date,
-	xml: string
+	delta: string
 }

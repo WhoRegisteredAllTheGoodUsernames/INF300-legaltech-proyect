@@ -1,16 +1,18 @@
+import { useContext } from 'react'
+import RouterContext from '@/RouterContext'
 import type { Views } from '@/types/view'
 
 function Navbar({
-	actualView, views, handleViewChange
+	views
 }: {
-	actualView: string
 	views: Views
-	handleViewChange: (nextView: string) => void
 }) {
+	const { view, handleViewChange } = useContext(RouterContext)
+
 	return (
 		<ul>
-		{Object.entries(views).map(([listView, view]) => (
-			<button onClick={() => handleViewChange(listView)}>{actualView == listView ? '*' : ''}{view.title}</button>
+		{Object.entries(views).map(([viewName, listView]) => (
+			<li key={viewName}><button onClick={() => handleViewChange(viewName)}>{view == viewName ? '*' : ''}{listView.title}</button></li>
 		))}
 		</ul>
 	)

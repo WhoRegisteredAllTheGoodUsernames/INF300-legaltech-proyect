@@ -1,17 +1,24 @@
-import { Suspense, use } from 'react'
+import { Suspense, use, useContext } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { db } from '@/db'
 import DataList from '@/components/DataList'
 import type { Template } from '@/types/template'
 import type { ListActions } from '@/types/view'
+import RouterContext from '@/RouterContext'
 
 function DocumentCreate({
 	template
 }: {
 	template: Template | undefined
 }) {
+	const { handleViewChange, handleActionChange } = useContext(RouterContext)
+	
 	if (!template) {
-		return null
+		return (
+			<h2>No se ha seleccionado ninguna plantilla. ¿Ir a la selección?
+				<button onClick={() => {handleViewChange('document'); handleActionChange('document', 'View', -1)}}>&rarr;</button>
+			</h2>
+		)
 	}
 
 	return (
@@ -21,15 +28,9 @@ function DocumentCreate({
 	)
 }
 
-function DocumentView({
-	action, actionParam, handleActionChange, handleViewChange
-}: {
-	action: string,
-	actionParam: number
-	handleActionChange: (nextActionView: string, nextAction: string, actionParam: number) => void
-	handleViewChange: (nextView: string) => void
-}) {
-
+function DocumentView() {
+	const { actionParam, action } = useContext(RouterContext)
+	
 	const template = actionParam == -1 ? undefined : use(db.templates.get({'id': actionParam}))
 
 	return (
@@ -49,8 +50,6 @@ function DocumentView({
 			<DataList
 				store='templates'
 				actions={{'Cargar': {'view': 'document', 'action': 'Create'}} as ListActions}
-				handleActionChange={handleActionChange}
-				handleViewChange={handleViewChange}
 			/>
 			</>
 		)}

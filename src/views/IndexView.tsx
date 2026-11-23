@@ -1,9 +1,9 @@
-function IndexView({
-	handleViewChange, handleActionChange
-}: {
-	handleViewChange: (nextView: string) => void
-	handleActionChange: (nextActionView: string, nextAction: string, actionParam: number) => void
-}) {
+import { useContext } from 'react'
+import RouterContext from '@/RouterContext'
+
+function IndexView() {
+	const { handleViewChange, handleActionChange } = useContext(RouterContext)
+
 	return (
 	<>
 	<h2>Documentos</h2>

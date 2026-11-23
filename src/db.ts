@@ -8,6 +8,6 @@ export const db = new Dexie('db') as Dexie & {
 }
 
 db.version(1).stores({
-	templates: '++id, name, description, created, last_edited, xml',
+	templates: '++id, name, description, created, last_edited, delta',
 	directory: '++id, rut, gender, full_name, birthday, marital_status, direction, bank_account'
 })
