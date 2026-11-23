@@ -45,7 +45,7 @@ function DocumentView() {
 			</ErrorBoundary>
 		) : (
 			<>
-			<h2>Seleccionar documento</h2>
+			<h2>Seleccionar plantilla</h2>
 
 			<DataList
 				store='templates'
