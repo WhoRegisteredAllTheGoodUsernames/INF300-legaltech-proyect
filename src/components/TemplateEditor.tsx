@@ -1,6 +1,6 @@
 import { use } from 'react'
 import type { Template } from '@/types/template'
-import QuillEditor from '@/components/Editor'
+import QuillEditor from '@/components/QuillEditor'
 
 function TemplateEditor({
 	templatePromise

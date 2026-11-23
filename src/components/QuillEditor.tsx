@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
-import Quill, { Delta } from 'quill';
+import Quill from 'quill';
+import Delta from 'quill-delta';
 import 'quill/dist/quill.snow.css';
+import { Contact, ContactAttr, Field, Clause, Variable } from '@/quill/registry'
 
 function QuillEditor({
 	content
@@ -9,6 +11,12 @@ function QuillEditor({
 }) {
 	const wrapperRef = useRef<HTMLDivElement | null>(null)
 	const quillRef = useRef<Quill | null>(null)
+
+	Quill.register(Contact)
+	Quill.register(ContactAttr)
+	Quill.register(Field)
+	Quill.register(Clause)
+	Quill.register(Variable)
 
 	useEffect(() => {
 		const wrapper = wrapperRef.current
